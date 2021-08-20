@@ -1,0 +1,14 @@
+0:0:0:0:0:0:0:1 - - [22/Jul/2021:15:28:26 -0300] "GET / HTTP/1.1" 404 - http-bio-8080-exec-1 0
+0:0:0:0:0:0:0:1 - - [22/Jul/2021:15:29:27 -0300] "GET /manager/text HTTP/1.1" 404 - http-bio-8080-exec-4 0
+0:0:0:0:0:0:0:1 - - [22/Jul/2021:15:29:37 -0300] "GET / HTTP/1.1" 404 - http-bio-8080-exec-6 0
+0:0:0:0:0:0:0:1 - - [22/Jul/2021:15:30:12 -0300] "GET /index HTTP/1.1" 404 - http-bio-8080-exec-7 0
+0:0:0:0:0:0:0:1 - - [22/Jul/2021:15:30:15 -0300] "GET / HTTP/1.1" 404 - http-bio-8080-exec-8 0
+0:0:0:0:0:0:0:1 - - [22/Jul/2021:15:31:09 -0300] "GET / HTTP/1.1" 404 - http-bio-8080-exec-1 0
+0:0:0:0:0:0:0:1 - - [22/Jul/2021:15:32:46 -0300] "GET / HTTP/1.1" 404 - http-bio-8080-exec-2 0
+0:0:0:0:0:0:0:1 - - [22/Jul/2021:15:33:46 -0300] "GET /webapp-test-maven HTTP/1.1" 302 - http-bio-8080-exec-3 0
+0:0:0:0:0:0:0:1 - - [22/Jul/2021:15:33:46 -0300] "GET /webapp-test-maven/ HTTP/1.1" 200 52 http-bio-8080-exec-4 504
+0:0:0:0:0:0:0:1 - - [22/Jul/2021:15:33:46 -0300] "GET /favicon.ico HTTP/1.1" 404 - http-bio-8080-exec-5 0
+0:0:0:0:0:0:0:1 - - [22/Jul/2021:15:35:16 -0300] "GET /webapp-test-maven/ HTTP/1.1" 200 53 http-bio-8080-exec-7 50
+0:0:0:0:0:0:0:1 - - [22/Jul/2021:15:41:49 -0300] "GET /webapp-test-maven/ HTTP/1.1" 200 53 http-bio-8080-exec-1 53
+0:0:0:0:0:0:0:1 - - [22/Jul/2021:15:47:22 -0300] "GET /webapp-test-maven/contato HTTP/1.1" 404 1001 http-bio-8080-exec-4 5
+0:0:0:0:0:0:0:1 - - [22/Jul/2021:15:48:01 -0300] "GET /webapp-test-maven/contato HTTP/1.1" 200 40 http-bio-8080-exec-1 36
