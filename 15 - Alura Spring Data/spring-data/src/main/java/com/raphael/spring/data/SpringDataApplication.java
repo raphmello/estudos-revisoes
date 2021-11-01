@@ -40,6 +40,7 @@ public class SpringDataApplication implements CommandLineRunner {
 				system = false;
 			}
 		}
+		String.format("A idade é %s %d","10",10);
 
 	}
 }
