@@ -6,6 +6,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "produtos")
+@NamedQuery(name = "Produto.produtosPorCategoria", query = "SELECT p FROM Produto p WHERE p.categoria.name = :nome")
 public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,7 +16,7 @@ public class Produto {
     private BigDecimal preco;
     private LocalDate dataCadastro = LocalDate.now();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Categoria categoria;
 
     public Produto() {
