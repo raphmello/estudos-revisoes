@@ -7,9 +7,10 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "produtos")
 @NamedQuery(name = "Produto.produtosPorCategoria", query = "SELECT p FROM Produto p WHERE p.categoria.name = :nome")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Produto {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
     private String nome;
     private String descricao;
