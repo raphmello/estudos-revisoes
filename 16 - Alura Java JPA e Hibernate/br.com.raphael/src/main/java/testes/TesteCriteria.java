@@ -23,9 +23,9 @@ public class TesteCriteria {
     }
 
     private static void popularBancoDeDados() {
-        Categoria celulares = new Categoria("CELULARES");
-        Categoria videogames = new Categoria("VIDEOGAMES");
-        Categoria informatica = new Categoria("INFORMATICA");
+        Categoria celulares = new Categoria("CELULARES","A");
+        Categoria videogames = new Categoria("VIDEOGAMES","A");
+        Categoria informatica = new Categoria("INFORMATICA","A");
 
         Produto celular = new Produto("Xiaomi","Muito legal",new BigDecimal("800"), celulares);
         Produto videogame = new Produto("PS5","Playstation 5",new BigDecimal("800"), celulares);

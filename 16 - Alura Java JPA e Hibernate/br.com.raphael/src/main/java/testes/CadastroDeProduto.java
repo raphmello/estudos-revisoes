@@ -27,7 +27,7 @@ public class CadastroDeProduto {
     }
 
     private static void cadastrarProduto() {
-        Categoria celulares = new Categoria("CELULARES");
+        Categoria celulares = new Categoria("CELULARES","A");
         Produto celular = new Produto("Xiaomi","Muito legal",new BigDecimal("800"), celulares);
 
         EntityManager em = JPAUtil.getEntityManager();

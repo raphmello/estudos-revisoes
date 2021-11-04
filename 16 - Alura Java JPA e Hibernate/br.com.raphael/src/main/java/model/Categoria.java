@@ -6,35 +6,25 @@ import javax.persistence.*;
 @Table(name = "categorias")
 public class Categoria {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String name;
+    @EmbeddedId
+    CategoriaId id;
 
     public Categoria() {
     }
 
-    public Categoria(String name) {
-        this.name = name;
+    public Categoria(String name, String tipo) {
+        id = new CategoriaId(name,tipo);
     }
 
-    public Long getId() {
+    public CategoriaId getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(CategoriaId id) {
         this.id = id;
     }
 
     public String getName() {
-        return name;
+        return this.id.getName();
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    //    CELULARES,
-//    INFORMATICA,
-//    LIVROS;
 }
