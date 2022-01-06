@@ -37,4 +37,13 @@ public class UserDaoService {
         return  null;
     }
 
+    public User deleteUser(int id) {
+        for (User user : users) {
+            if (user.getId() == id) {
+                users.remove(user);
+                return user;
+            }
+        }
+        return  null;
+    }
 }
