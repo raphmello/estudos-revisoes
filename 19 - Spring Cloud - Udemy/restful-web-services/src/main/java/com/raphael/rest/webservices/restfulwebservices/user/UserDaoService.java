@@ -2,8 +2,10 @@ package com.raphael.rest.webservices.restfulwebservices.user;
 
 import org.springframework.stereotype.Component;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 @Component
 public class UserDaoService {
