@@ -23,16 +23,19 @@ public class UserJpaResource {
     UserDaoService service;
 
     @Autowired
-    UserRepository repository;
+    UserRepository useRepository;
+
+    @Autowired
+    PostRepository postRepository;
 
     @GetMapping(path = "/users")
     public List<User> retreiveAllUsers() {
-        return repository.findAll();
+        return useRepository.findAll();
     }
 
     @GetMapping(path = "/users/{id}")
     public EntityModel<User> retreiveUser(@PathVariable int id) {
-        Optional<User> userOptional = repository.findById(id);
+        Optional<User> userOptional = useRepository.findById(id);
         User user;
         if (userOptional.isPresent()) {
             user = userOptional.get();
@@ -49,13 +52,36 @@ public class UserJpaResource {
 
     @PostMapping(path = "/users")
     public ResponseEntity<User> createUser(@RequestBody @Valid User user) {
-        User savedUser = repository.save(user);
+        User savedUser = useRepository.save(user);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedUser.getId()).toUri();
         return ResponseEntity.created(uri).body(user);
     }
 
     @DeleteMapping("/users/{id}")
     public void deleteUser(@PathVariable int id) {
-        repository.deleteById(id);
+        useRepository.deleteById(id);
+    }
+
+    @GetMapping(path = "/users/{id}/posts")
+    public List<Post> retreiveAllPostsByUser(@PathVariable int id) {
+        Optional<User> user = useRepository.findById(id);
+        if (user.isEmpty())
+            throw new UserNotFoundException("id-"+id);
+
+        return user.get().getPosts();
+    }
+
+    @PostMapping(path = "/users/{id}/posts")
+    public ResponseEntity<Post> createPost(@RequestBody @Valid Post post, @PathVariable int id) {
+        Optional<User> userOptional = useRepository.findById(id);
+        if (userOptional.isEmpty())
+            throw new UserNotFoundException("id-"+id);
+
+        User user = userOptional.get();
+        post.setUser(user);
+        postRepository.save(post);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(post.getId()).toUri();
+        return ResponseEntity.created(uri).body(post);
     }
 }
