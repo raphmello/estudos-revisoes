@@ -18,6 +18,9 @@ public class User {
     @Past
     private Date birthDate;
 
+    public User() {
+    }
+
     public User(Integer id, String name, Date birthDate) {
         this.id = id;
         this.name = name;
