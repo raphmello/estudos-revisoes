@@ -1,9 +1,6 @@
-package com.raphael.microservices.currencyexchangeservice.controller;
+package com.raphael.microservices.currencyexchangeservice.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
@@ -22,11 +19,12 @@ public class CurrencyExchange {
     public CurrencyExchange() {
     }
 
-    public CurrencyExchange(Long id, String from, String to, BigDecimal conversionMultiple) {
+    public CurrencyExchange(Long id, String from, String to, BigDecimal conversionMultiple, String environment) {
         this.id = id;
         this.from = from;
         this.to = to;
         this.conversionMultiple = conversionMultiple;
+        this.environment = environment;
     }
 
     public Long getId() {
