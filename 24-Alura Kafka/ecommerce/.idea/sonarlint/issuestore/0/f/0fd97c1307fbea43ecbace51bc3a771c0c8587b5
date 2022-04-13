@@ -1,2 +1,12 @@
 
-S	java:S106"9Replace this use of System.out or System.err by a logger.(êâªšûÿÿÿÿ
+
+java:S1130"€Remove the declaration of thrown exception 'java.util.concurrent.ExecutionException', as it cannot be thrown from method's body.(­Ëê8âÖ‘ü/
+”
+java:S1130"wRemove the declaration of thrown exception 'java.lang.InterruptedException', as it cannot be thrown from method's body.(­Ëê8âÖ‘ü/
+V	java:S125"<This block of commented-out lines of code should be removed.(ù´Ëİıÿÿÿÿ
+b
+java:S1128"LRemove this unused import 'org.apache.kafka.clients.producer.KafkaProducer'.(ªŒ»
+h
+java:S1128"MRemove this unused import 'org.apache.kafka.clients.producer.ProducerRecord'.(ä°«¡üÿÿÿÿ
+J
+java:S1144"/Remove this unused private "properties" method.(Ú×ûüÿÿÿÿ
