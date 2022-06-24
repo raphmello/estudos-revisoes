@@ -5,3 +5,4 @@
 - kubectl scale--replica=6 -f replicaset-definition.yml
 - kubectl edit replicaset myapp-replicaset
 - kubectl scale replicaset myapp-replicaset --replicas=2
+- kubectl get all
