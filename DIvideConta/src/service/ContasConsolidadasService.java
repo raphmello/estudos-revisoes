@@ -35,12 +35,6 @@ public class ContasConsolidadasService {
 
     }
 
-    public ContasConsolidadas consolidarParticipantes(Set<Responsavel> participantes) {
-        ContasConsolidadas contasConsolidadas = new ContasConsolidadas();
-        participantes.forEach(contasConsolidadas::adicionaParticipante);
-        return contasConsolidadas;
-    }
-
     public void simplificarDivisoes(ContasConsolidadas contasConsolidadas) {
         List<Responsavel> participantesOrdenados = getResponsaveisOrdenadosPorDevedoresAsc(contasConsolidadas.getResponsaveis());
         int qtdParticipantes = participantesOrdenados.size();
