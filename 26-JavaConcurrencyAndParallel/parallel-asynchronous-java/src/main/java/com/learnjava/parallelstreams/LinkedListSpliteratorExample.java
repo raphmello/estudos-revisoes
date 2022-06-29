@@ -1,6 +1,7 @@
 package com.learnjava.parallelstreams;
 
 import java.util.ArrayList;
+import java.util.IntSummaryStatistics;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,6 +24,16 @@ public class LinkedListSpliteratorExample {
                 .map(number -> number * multiplyValue)
                 .collect(Collectors.toList());
 
+        IntSummaryStatistics intSummaryStatistics = resultList.stream()
+                .mapToInt(number -> number)
+                .summaryStatistics();
+
+        IntSummaryStatistics collect = resultList.stream()
+                .collect(Collectors.summarizingInt(number -> number));
+
+        resultList.parallelStream().forEach((a)->{
+            a.intValue();
+        });
         timeTaken();
         return resultList;
     }
