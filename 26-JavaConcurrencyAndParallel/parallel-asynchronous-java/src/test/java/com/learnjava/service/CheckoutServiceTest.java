@@ -23,11 +23,11 @@ class CheckoutServiceTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {8, 12, 16, 22})
+    @ValueSource(ints = {6})
     void checkout(int nOfItems) {
         Cart cart = DataSet.createCart(nOfItems);
         CheckoutResponse checkoutResponse = checkoutService.checkout(cart);
-        assertEquals(CheckoutStatus.FAILURE, checkoutResponse.getCheckoutStatus());
-        stopWatch.reset();
+        assertEquals(CheckoutStatus.SUCCESS, checkoutResponse.getCheckoutStatus());
+        assertTrue(checkoutResponse.getFinalRate() > 0);
     }
 }
