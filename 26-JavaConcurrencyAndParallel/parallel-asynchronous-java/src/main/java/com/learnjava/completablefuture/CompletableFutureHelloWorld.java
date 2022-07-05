@@ -196,6 +196,38 @@ public class CompletableFutureHelloWorld {
                 .thenCompose((previous)-> hws.worldFuture(previous));
     }
 
+    public String anyOf() {
+        //db
+        CompletableFuture<String> db = CompletableFuture.supplyAsync(() -> {
+            delay(1000);
+            log("response from db");
+            return "hello world";
+        });
+        //rest
+        CompletableFuture<String> rest = CompletableFuture.supplyAsync(() -> {
+            delay(2000);
+            log("response from rest");
+            return "hello world";
+        });
+        //soap
+        CompletableFuture<String> soap = CompletableFuture.supplyAsync(() -> {
+            delay(3000);
+            log("response from soap");
+            return "hello world";
+        });
+
+        CompletableFuture<Object> anyOf = CompletableFuture.anyOf(db, rest, soap);
+        return anyOf
+                .thenApply(o -> {
+                    if (o instanceof String) {
+                        return (String) o;
+                    } else {
+                        return null;
+                    }
+                })
+                .join();
+    }
+
     public static void main(String[] args) {
 
 

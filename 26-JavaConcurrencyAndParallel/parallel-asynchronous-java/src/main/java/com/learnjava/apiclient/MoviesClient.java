@@ -44,6 +44,21 @@ public class MoviesClient {
                 .collect(Collectors.toList());
     }
 
+    public List<Movie> retrieveMoviesAsyncAllOf(List<Long> movieInfoIds) {
+        List<CompletableFuture<Movie>> futures = movieInfoIds
+                .stream()
+                .map(this::retrieveMovieAsync)
+                .collect(Collectors.toList());
+
+        CompletableFuture<Void> allOf = CompletableFuture.allOf(futures.toArray(new CompletableFuture[futures.size()]));
+        return allOf
+                .thenApply(v -> futures
+                        .stream()
+                        .map(CompletableFuture::join)
+                        .collect(Collectors.toList()))
+        .join();
+    }
+
     public CompletableFuture<Movie> retrieveMovieAsync(Long movieInfoId) {
         CompletableFuture<MovieInfo> movieInfoCompletableFuture = CompletableFuture.supplyAsync(() -> invokeMovieInfoService(movieInfoId));
         CompletableFuture<List<Review>> listCompletableFuture = CompletableFuture.supplyAsync(() -> invokeReviewService(movieInfoId));

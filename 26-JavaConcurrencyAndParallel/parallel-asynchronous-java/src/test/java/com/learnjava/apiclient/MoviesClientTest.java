@@ -61,4 +61,14 @@ class MoviesClientTest {
         timeTaken();
         stopWatchReset();
     }
+
+    @RepeatedTest(10)
+    void retrieveMoviesAsyncAllOf() {
+        startTimer();
+        List<Movie> movies = moviesClient.retrieveMoviesAsyncAllOf(List.of(1L, 2L, 3L, 4L, 5L, 6L, 7L));
+        assertNotNull(movies);
+        assertEquals(7, movies.size());
+        timeTaken();
+        stopWatchReset();
+    }
 }

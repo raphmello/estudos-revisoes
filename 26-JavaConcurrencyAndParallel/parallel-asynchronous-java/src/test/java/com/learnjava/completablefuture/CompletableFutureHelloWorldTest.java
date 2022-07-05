@@ -7,6 +7,7 @@ import java.util.concurrent.CompletableFuture;
 
 import static com.learnjava.util.CommonUtil.startTimer;
 import static com.learnjava.util.CommonUtil.timeTaken;
+import static com.learnjava.util.LoggerUtil.log;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CompletableFutureHelloWorldTest {
@@ -69,5 +70,11 @@ class CompletableFutureHelloWorldTest {
                 })
                 .join();
         timeTaken();
+    }
+
+    @Test
+    void anyOf() {
+        String any = cfhw.anyOf();
+        log(any);
     }
 }
