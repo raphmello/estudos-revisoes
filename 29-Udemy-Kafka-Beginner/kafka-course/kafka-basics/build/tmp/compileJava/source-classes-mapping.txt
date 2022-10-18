@@ -1,2 +1,0 @@
-br/com/raphael/demos/kafka/ProducerDemo.java
- br.com.raphael.demos.kafka.ProducerDemo
