@@ -50,7 +50,6 @@ public class ConsumerDemoWithShutdown {
             consumer.subscribe(Collections.singleton(topic));
 
             while (true) {
-                log.info("Polling");
 
                 ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(1000));
 
