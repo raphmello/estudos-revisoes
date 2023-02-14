@@ -169,5 +169,16 @@ public class FP04CustomClass {
         System.out.println("------------------------------------------------");
         System.out.println(courses.stream()
                 .collect(Collectors.groupingBy(Course::getCategory, Collectors.mapping(Course::getName, Collectors.toList()))));
+
+
+        System.out.println("------------------------------------------------");
+
+
+        Predicate<Course> reviewScoreGreaterThen95Predicate = createPredicateWithReviewScoreGreaterThenCutOff(95);
+        Predicate<Course> reviewScoreGreaterThen90Predicate = createPredicateWithReviewScoreGreaterThenCutOff(90);
+    }
+
+    private static Predicate<Course> createPredicateWithReviewScoreGreaterThenCutOff(int cutOffReviewScore) {
+        return course -> course.getReviewScore() > cutOffReviewScore;
     }
 }
