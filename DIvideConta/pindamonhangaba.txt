@@ -1,0 +1,16 @@
+//nome,peso,valorConta1,valorConta2,...
+Gustavo,1,397.06
+Nath,1,0.0
+Vini,1,1125.0
+Tathi,1,0.0
+Ale,1,399.34
+Paty,1,0.0
+Marcos,1,224.78
+Paulinha,1,0.0
+Raphael,1,327.92
+Giovani,1,0.0
+Cassia,1,0.0
+Thi,1,69.15
+Ive,1,0.0
+Dani,1,150.98
+Leti,1,0.0

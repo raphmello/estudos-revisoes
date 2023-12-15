@@ -9,13 +9,12 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class DivideConta {
 
+    public static final String TXT_PATH_PINDAMONHANGABA = "C:\\workspace\\estudos-revisoes\\DIvideConta\\pindamonhangaba.txt";
     public static final String TXT_PATH_CASA = "C:\\workspace\\estudos-revisoes\\piracaia-casa.txt";
     public static final String TXT_PATH_COMPRAS_GERAIS = "C:\\workspace\\estudos-revisoes\\piracaia-compras-gerais.txt";
     public static final String TXT_PATH_CARNES = "C:\\workspace\\estudos-revisoes\\piracaia-carnes.txt";
@@ -36,28 +35,28 @@ public class DivideConta {
 
     public static void main(String[] args) {
         ContasConsolidadas consolidacaoCasa = new ContasConsolidadas();
-        ContasConsolidadas consolidacaoComprasGerais = new ContasConsolidadas();
-        ContasConsolidadas consolidacaoCarnes = new ContasConsolidadas();
-        ContasConsolidadas consolidacaoCervejas = new ContasConsolidadas();
+//        ContasConsolidadas consolidacaoComprasGerais = new ContasConsolidadas();
+//        ContasConsolidadas consolidacaoCarnes = new ContasConsolidadas();
+//        ContasConsolidadas consolidacaoCervejas = new ContasConsolidadas();
 
-        ContasConsolidadasService divisaoCasa = calcularDivisoes(consolidacaoCasa, TXT_PATH_CASA, "CALCULO CASA");
-        ContasConsolidadasService divisaoComprasGerais = calcularDivisoes(consolidacaoComprasGerais, TXT_PATH_COMPRAS_GERAIS, "CALCULO COMPRAS GERAIS");
-        ContasConsolidadasService divisaoCarnes = calcularDivisoes(consolidacaoCarnes, TXT_PATH_CARNES, "CALCULO CARNES");
-        ContasConsolidadasService divisaoCervejas = calcularDivisoes(consolidacaoCervejas, TXT_PATH_CERVEJAS, "CALCULO BEBIDAS ALCOOLICAS");
+        ContasConsolidadasService divisaoCasa = calcularDivisoes(consolidacaoCasa, TXT_PATH_PINDAMONHANGABA, "VALORES A RECEBER/PAGAR");
+//        calcularDivisoes(consolidacaoComprasGerais, TXT_PATH_COMPRAS_GERAIS, "CALCULO COMPRAS GERAIS");
+//        calcularDivisoes(consolidacaoCarnes, TXT_PATH_CARNES, "CALCULO CARNES");
+//        calcularDivisoes(consolidacaoCervejas, TXT_PATH_CERVEJAS, "CALCULO BEBIDAS ALCOOLICAS");
 
         consolidacaoCasa.getResponsaveis().forEach(respGeral -> {
-            if(!Objects.isNull(consolidacaoComprasGerais.buscarResponsavel(respGeral.getNome()))) {
-                Double valor = consolidacaoComprasGerais.buscarResponsavel(respGeral.getNome()).getValorPonderadoAPagarDepoisDoDesconto();
-                respGeral.ajustarValorPonderadoAPagarDepoisDoDesconto(valor);
-            }
-           if(!Objects.isNull(consolidacaoCarnes.buscarResponsavel(respGeral.getNome()))) {
-               Double valor = consolidacaoCarnes.buscarResponsavel(respGeral.getNome()).getValorPonderadoAPagarDepoisDoDesconto();
-               respGeral.ajustarValorPonderadoAPagarDepoisDoDesconto(valor);
-           }
-            if(!Objects.isNull(consolidacaoCervejas.buscarResponsavel(respGeral.getNome()))) {
-                Double valor = consolidacaoCervejas.buscarResponsavel(respGeral.getNome()).getValorPonderadoAPagarDepoisDoDesconto();
-                respGeral.ajustarValorPonderadoAPagarDepoisDoDesconto(valor);
-            }
+//            if(!Objects.isNull(consolidacaoComprasGerais.buscarResponsavel(respGeral.getNome()))) {
+//                Double valor = consolidacaoComprasGerais.buscarResponsavel(respGeral.getNome()).getValorPonderadoAPagarDepoisDoDesconto();
+//                respGeral.ajustarValorPonderadoAPagarDepoisDoDesconto(valor);
+//            }
+//           if(!Objects.isNull(consolidacaoCarnes.buscarResponsavel(respGeral.getNome()))) {
+//               Double valor = consolidacaoCarnes.buscarResponsavel(respGeral.getNome()).getValorPonderadoAPagarDepoisDoDesconto();
+//               respGeral.ajustarValorPonderadoAPagarDepoisDoDesconto(valor);
+//           }
+//            if(!Objects.isNull(consolidacaoCervejas.buscarResponsavel(respGeral.getNome()))) {
+//                Double valor = consolidacaoCervejas.buscarResponsavel(respGeral.getNome()).getValorPonderadoAPagarDepoisDoDesconto();
+//                respGeral.ajustarValorPonderadoAPagarDepoisDoDesconto(valor);
+//            }
         });
 
         divisaoCasa.simplificarDivisoes(consolidacaoCasa);
@@ -72,7 +71,7 @@ public class DivideConta {
 
     private static ContasConsolidadasService calcularDivisoes(ContasConsolidadas consolidacao, String filePath, String title) {
         List<List<String>> records = lerArquivoTxt(filePath);
-
+        Map<String, BigDecimal> totalValue = new HashMap<>();
 
         records.forEach(rec -> {
             Responsavel responsavel = consolidacao.buscarResponsavel(rec.get(0));
@@ -81,9 +80,25 @@ public class DivideConta {
                 consolidacao.adicionaParticipante(responsavel);
             }
             for (int i = 2;i < rec.size();i++) {
-                responsavel.adicionaConta(new Conta(BigDecimal.valueOf(Double.parseDouble(rec.get(i)))));
+                BigDecimal valor = BigDecimal.valueOf(Double.parseDouble(rec.get(i)));
+                responsavel.adicionaConta(new Conta(valor));
+                if (totalValue.containsKey(responsavel.getNome())) {
+                    BigDecimal valorInicial = totalValue.get(responsavel.getNome());
+                    totalValue.put(responsavel.getNome(), valorInicial.add(valor));
+                } else {
+                    totalValue.put(responsavel.getNome(), valor);
+                }
             }
         });
+        System.out.println("\n=============" + "GASTOS POR PESSOA" + "=================");
+        totalValue.entrySet().stream()
+                .filter(gasto -> gasto.getValue().doubleValue() != 0)
+                .forEach(entry -> System.out.println(entry.getKey() + " gastou " + entry.getValue()));
+
+        System.out.println("\n=============" + "TOTAL" + "=================");
+        double sum = totalValue.values().stream().mapToDouble(BigDecimal::doubleValue).sum();
+        System.out.println("TOTAL = " + sum);
+
         System.out.println("\n=============" + title + "=================");
         ContasConsolidadasService service = new ContasConsolidadasService();
         service.gerarDivisao(consolidacao);
